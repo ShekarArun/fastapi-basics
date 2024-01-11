@@ -26,6 +26,15 @@ async def get_books_by_category(category: str):
     return res
 
 
+@app.get('/books/{book_author}')
+async def read_by_author_category(book_author: str, category: str):
+    res = []
+    for book in BOOKS:
+        if book.get('author').casefold() == book_author.casefold() and book.get('category').casefold() == category.casefold():
+            return book
+    return 'Book with matching author and category not found'
+
+
 @app.get('/books/{book_title}')
 async def read_book(book_title: str):
     for book in BOOKS:
