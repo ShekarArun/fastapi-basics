@@ -17,6 +17,15 @@ async def read_all_books():
     return BOOKS
 
 
+@app.get('/books/')
+async def get_books_by_category(category: str):
+    res = []
+    for book in BOOKS:
+        if book.get('category').casefold() == category.casefold():
+            res.append(book)
+    return res
+
+
 @app.get('/books/{book_title}')
 async def read_book(book_title: str):
     for book in BOOKS:
