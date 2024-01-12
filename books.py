@@ -43,6 +43,14 @@ async def read_book(book_title: str):
     return 'Book with matching title not found'
 
 
-@app.post('/books/create')
+@app.post('/books')
 async def create_book(new_book=Body()):
     BOOKS.append(new_book)
+
+
+@app.put('/books')
+async def update_book(updated_book=Body()):
+    for i in range(len(BOOKS)):
+        if BOOKS[i].get('title').casefold() == updated_book.get('title').casefold():
+            BOOKS[i] = updated_book
+            return updated_book
