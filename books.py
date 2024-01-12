@@ -27,6 +27,17 @@ async def get_books_by_category(category: str):
 
 
 @app.get('/books/{book_author}')
+async def read_by_author(book_author: str):
+    res = []
+    for book in BOOKS:
+        if book.get('author').casefold() == book_author.casefold():
+            res.append(book)
+    if len(res):
+        return res
+    return 'No books found with specified author'
+
+
+@app.get('/books/{book_author}')
 async def read_by_author_category(book_author: str, category: str):
     res = []
     for book in BOOKS:
