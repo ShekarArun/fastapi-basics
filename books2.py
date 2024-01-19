@@ -82,3 +82,12 @@ def get_book_id(book: Book):
         book.id = 1
 
     return book
+
+
+@app.put('/books/{book_id}')
+async def update_book(book_id: int, book_req: BookRequest):
+    for i in range(len(BOOKS)):
+        if BOOKS[i].id == book_id:
+            book_req.id = book_id
+            BOOKS[i] = book_req
+    return book_req
