@@ -11,13 +11,15 @@ class Book:
     author: str
     description: str
     rating: int
+    published_year: int
 
-    def __init__(self, id: int, title: str, author: str, description: str, rating: int) -> None:
+    def __init__(self, id: int, title: str, author: str, description: str, rating: int, published_year: int) -> None:
         self.id = id
         self.title = title
         self.author = author
         self.description = description
         self.rating = rating
+        self.published_year = published_year
 
 
 class BookRequest(BaseModel):
@@ -26,6 +28,7 @@ class BookRequest(BaseModel):
     author: str = Field(min_length=1)
     description: str = Field(min_length=1, max_length=100)
     rating: int = Field(gt=-1, lt=6)  # Rating can only be 0 to 5
+    published_year: int = Field(gt=1800, lt=2100)
 
     class Config:
         # Example schema specifies the example value for a schema in documentation
@@ -40,9 +43,12 @@ class BookRequest(BaseModel):
 
 
 BOOKS = [
-    Book(1, 'Argument of Kings', 'Joe Abercrombie', 'Lovely fantasy book', 5),
-    Book(2, 'Harry Potter', 'J K Rowling', 'Another magical childhood book', 4),
-    Book(3, 'New Fantasy Book', 'Joe Abercrombie', 'Another one by this guy', 3)
+    Book(1, 'Argument of Kings', 'Joe Abercrombie',
+         'Lovely fantasy book', 5, 2010),
+    Book(2, 'Harry Potter', 'J K Rowling',
+         'Another magical childhood book', 4, 2020),
+    Book(3, 'New Fantasy Book', 'Joe Abercrombie',
+         'Another one by this guy', 3, 2024)
 ]
 
 
