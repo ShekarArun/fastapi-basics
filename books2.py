@@ -27,6 +27,17 @@ class BookRequest(BaseModel):
     description: str = Field(min_length=1, max_length=100)
     rating: int = Field(gt=-1, lt=6)  # Rating can only be 0 to 5
 
+    class Config:
+        # Example schema specifies the example value for a schema in documentation
+        json_schema_extra = {
+            'example': {
+                'title': 'A new book hard coded as default input',
+                'author': 'Default author as per config',
+                'description': 'This is a description for a book',
+                'rating': 4
+            }
+        }
+
 
 BOOKS = [
     Book(1, 'Argument of Kings', 'Joe Abercrombie', 'Lovely fantasy book', 5),
@@ -38,6 +49,13 @@ BOOKS = [
 @app.get('/books')
 async def read_all_books():
     return BOOKS
+
+
+@app.get('/books/{book_id}')
+async def read_book(book_id: int):
+    for book in BOOKS:
+        if book.id == book_id:
+            return book
 
 
 @app.post('/books')
