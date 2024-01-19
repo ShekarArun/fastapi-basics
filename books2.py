@@ -91,3 +91,11 @@ async def update_book(book_id: int, book_req: BookRequest):
             book_req.id = book_id
             BOOKS[i] = book_req
     return book_req
+
+
+@app.delete('/books/{book_id}')
+async def delete_book(book_id: int):
+    for i in range(len(BOOKS)):
+        if BOOKS[i].id == book_id:
+            res = BOOKS.pop(i)
+            return res
