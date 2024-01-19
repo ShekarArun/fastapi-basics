@@ -37,7 +37,8 @@ class BookRequest(BaseModel):
                 'title': 'A new book hard coded as default input',
                 'author': 'Default author as per config',
                 'description': 'This is a description for a book',
-                'rating': 4
+                'rating': 4,
+                'published_year': 2011
             }
         }
 
@@ -65,10 +66,20 @@ async def read_book(book_id: int):
 
 
 @app.get('/books/')
-async def read_book_by_rating(book_rating: int):
+async def read_book_by_rating(book_rating: int | None = None):
     res = []
     for book in BOOKS:
         if book.rating == book_rating:
+            res.append(book)
+    return res
+
+
+@app.get('/books/year/')
+async def read_book_by_published_year(published_year: int | None = None):
+    print('year')
+    res = []
+    for book in BOOKS:
+        if book.published_year == published_year:
             res.append(book)
     return res
 
